@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+const baseUrl = 'https://raw.githubusercontent.com/matchilling/gatsby-remark-emojis/master/resource/image',
+      columns = 10,
+      source = require('./../resource/emoji.json'),
+      emojis = Object.keys(source).map((key) => source[key]),
+      fs = require('fs'),
+      output = './emoji.md',
+      path = require('path'),
+      rows = Math.ceil(emojis.length / columns);
+
+new Promise((resolve) => {
+  let index = 0,
+      markdown = '# Supported Emoji\n\n';
+
+  for (let i = 1; i <= rows; i += 1) {
+    if (i === 2) markdown += '|---'.repeat(columns) + '|\n'
+
+    for (let j = 1; j <= columns; j += 1) {
+      const emoji = emojis[index];
+      markdown += undefined !== emoji
+        ? `| ![${emoji.key}](${baseUrl}/${emoji.key}.png)`
+        : '|    ';
+
+      index += 1;
+    }
+    markdown += `|\n`;
+  }
+
+  resolve(markdown);
+})
+.then((response) => {
+  fs.writeFile(path.resolve(output), response, 'utf8', (err) => {
+    if (err) return console.error(err);
+  });
+});

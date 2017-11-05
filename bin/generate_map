@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const base64 = (string) => new Buffer(string).toString('base64'),
+      dirname = './resource/image',
+      escape = (string) => string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
+      fs = require('fs'),
+      output = './resource/emoji.json',
+      path = require('path');
+
+Promise.resolve(fs.readdirSync(`${path.resolve(dirname)}`)).then((files) => new Promise((resolve) => {
+  const response = {};
+
+  files.forEach((file) => {
+    const contents = fs.readFileSync(`${path.resolve(`${dirname}`)}/${file}`),
+          key = file.replace(/\.[^/.]+$/, '');
+
+    response[key] = {
+      'key'     : key,
+      'pattern' : `:${escape(key)}:`,
+      '64'      : base64(contents)
+    };
+  });
+
+    return resolve(response);
+}))
+.then((response) => {
+  fs.writeFile(path.resolve(output), JSON.stringify(response), 'utf8', (err) => {
+    if (err) return console.error(err);
+  });
+})

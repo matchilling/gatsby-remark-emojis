@@ -1,0 +1,30 @@
+{
+  "name": "gatsby-remark-emojis",
+  "author": {
+    "name": "Mathias Schilling",
+    "email": "m@matchilling.com",
+    "url": "https://www.matchilling.com"
+  },
+  "homepage": "https://matchilling.com",
+  "version": "0.1.0",
+  "license": "GPL-3.0",
+  "description": "Processes emoji in markdown and inlines `<img>` tags with the corresponding base64 corresponding of the image.",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "markdown",
+    "remark",
+    "emoji"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/matchilling/gatsby-remark-emojis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matchilling/gatsby-remark-emojis.git/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'No test implemented yet'"
+  }
+}
