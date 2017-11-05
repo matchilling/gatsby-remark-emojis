@@ -1,2 +1,3 @@
 resource/image/
 bin/generate_map
+bin/generate_overview
