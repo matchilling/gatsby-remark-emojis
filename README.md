@@ -21,6 +21,8 @@ plugins: [
       active : true,
       // Add a custom css class
       class  : 'emoji-icon',
+      // Select the size (available size: 16, 24, 32, 64)
+      size   : 64,
       // Add custom styles
       styles : {
         display      : 'inline',

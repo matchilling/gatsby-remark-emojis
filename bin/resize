@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+readonly SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+readonly PROJECT_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
+
+readonly SIZE=24
+
+echo "$SIZE"'x'"$SIZE"
+
+for IMAGE_FILE in $(find $PROJECT_DIR/resource/image/64 -type f ! -iname ".*"); do
+    DEST_FILE=$(echo ${IMAGE_FILE} | sed -e "s/64/$SIZE/g")
+    DEST_DIR=$(dirname ${DEST_FILE})
+
+    if [ ! -d ${DEST_DIR} ]; then
+        mkdir -p ${DEST_DIR}
+    fi
+
+    printf "Resizing ${IMAGE_FILE} ... \n"
+    convert $IMAGE_FILE -resize "$SIZE"'x'"$SIZE" $DEST_FILE
+done

@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 const base64 = (string) => new Buffer(string).toString('base64'),
-      dirname = './resource/image',
       escape = (string) => string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
       fs = require('fs'),
-      output = './resource/emoji.json',
+      size = 16,
+      dirname = `./resource/image/${size}`,
+      output = `./resource/emoji.${size}.json`,
       path = require('path');
 
 Promise.resolve(fs.readdirSync(`${path.resolve(dirname)}`)).then((files) => new Promise((resolve) => {
@@ -15,9 +16,9 @@ Promise.resolve(fs.readdirSync(`${path.resolve(dirname)}`)).then((files) => new 
           key = file.replace(/\.[^/.]+$/, '');
 
     response[key] = {
+      'data'    : base64(contents),
       'key'     : key,
-      'pattern' : `:${escape(key)}:`,
-      '64'      : base64(contents)
+      'pattern' : `:${escape(key)}:`
     };
   });
 
