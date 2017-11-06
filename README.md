@@ -18,7 +18,6 @@ plugins: [
     options: {
       // In your gatsby-transformer-remark plugin array
       plugins: [{
-        // In your gatsby-config.js
         resolve: 'gatsby-remark-emojis',
         options: {
           // Deactivate the plugin globally (default: true)
