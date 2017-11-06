@@ -6,7 +6,7 @@
     "url": "https://www.matchilling.com"
   },
   "homepage": "https://matchilling.com",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "GPL-3.0",
   "description": "Processes emoji in markdown and inlines `<img>` tags with the corresponding base64 corresponding of the image.",
   "keywords": [
