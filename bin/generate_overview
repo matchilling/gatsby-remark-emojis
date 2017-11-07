@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-const baseUrl = 'https://raw.githubusercontent.com/matchilling/gatsby-remark-emojis/master/resource/image',
-      columns = 10,
-      source = require('./../resource/emoji.json'),
+const size = 32,
+      baseUrl = `https://raw.githubusercontent.com/matchilling/gatsby-remark-emojis/master/resource/image/${size}`,
+      columns = 3,
+      source = require(`./../resource/emoji.${size}.json`),
       emojis = Object.keys(source).map((key) => source[key]),
       fs = require('fs'),
       output = './emoji.md',
@@ -10,24 +11,24 @@ const baseUrl = 'https://raw.githubusercontent.com/matchilling/gatsby-remark-emo
       rows = Math.ceil(emojis.length / columns);
 
 new Promise((resolve) => {
-  let index = 0,
-      markdown = '# Supported Emoji\n\n';
+  let body = '# Supported Emoji\n\n',
+      index = 0,
+      table = '';
 
   for (let i = 1; i <= rows; i += 1) {
-    if (i === 2) markdown += '|---'.repeat(columns) + '|\n'
-
+    table += '<tr>';
     for (let j = 1; j <= columns; j += 1) {
       const emoji = emojis[index];
-      markdown += undefined !== emoji
-        ? `| ![${emoji.key}](${baseUrl}/${emoji.key}.png)`
-        : '|    ';
+      table += undefined !== emoji
+        ? `<td align="center"><img src="${baseUrl}/${emoji.key}.png" alt=":${emoji.key}:" title=":${emoji.key}:" /><br/>${emoji.key}</td>`
+        : '<td></td>';
 
       index += 1;
     }
-    markdown += `|\n`;
+    table += `</tr>`;
   }
 
-  resolve(markdown);
+  resolve(`${body}<table style="width:100%">${table}</table>`);
 })
 .then((response) => {
   fs.writeFile(path.resolve(output), response, 'utf8', (err) => {
