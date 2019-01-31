@@ -6,7 +6,7 @@
     "url": "https://www.matchilling.com"
   },
   "homepage": "https://matchilling.com",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "license": "GPL-3.0",
   "description": "Processes emoji in markdown and inlines `<img>` tags with the corresponding base64 corresponding of the image.",
   "keywords": [
@@ -21,10 +21,16 @@
     "url": "git+ssh://git@github.com/matchilling/gatsby-remark-emojis.git"
   },
   "bugs": {
-    "url": "https://github.com/matchilling/gatsby-remark-emojis.git/issues"
+    "url": "https://github.com/matchilling/gatsby-remark-emojis/issues"
   },
   "main": "index.js",
   "scripts": {
-    "test": "echo 'No test implemented yet'"
+    "publish": "npm test && npm publish",
+    "test": "mocha index.spec.js"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.3"
   }
 }

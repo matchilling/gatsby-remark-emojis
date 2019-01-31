@@ -21,9 +21,13 @@ module.exports = {
     Object.keys(emojis).forEach((key) => {
       const emoji = emojis[key],
             pattern = new RegExp(emoji.pattern, 'g'),
-            replacement = `<img ${classAttribute} alt="emoji-${key}" data-icon="emoji-${key}" style="${styleAttribute}" src="data:image/png;base64, ${emojis[key].data}" title="emoji-${key}" />`;
+            replacement = (classAttribute ? `<img ${classAttribute} ` : '<img ') + `alt="emoji-${key}" data-icon="emoji-${key}" style="${styleAttribute}" src="data:image/png;base64, ${emojis[key].data}" title="emoji-${key}" />`;
 
-      markdownNode.internal.content = markdownNode.internal.content.replace(pattern, replacement);
+
+      markdownNode.internal.content = markdownNode.internal.content.replace(
+        pattern,
+        replacement
+      );
     });
 
     return Promise.resolve();
