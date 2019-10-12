@@ -3,7 +3,7 @@
 readonly SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 readonly PROJECT_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
-readonly SIZE=24
+readonly SIZE=16
 
 echo "$SIZE"'x'"$SIZE"
 

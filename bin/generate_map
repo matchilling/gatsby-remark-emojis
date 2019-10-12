@@ -1,31 +1,51 @@
 #!/usr/bin/env node
+// Usage `./bin/generate_map --size (16|24|32|64)`
 
-const base64 = (string) => new Buffer(string).toString('base64'),
-      escape = (string) => string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
-      fs = require('fs'),
-      size = 16,
-      dirname = `./resource/image/${size}`,
-      output = `./resource/emoji.${size}.json`,
-      path = require('path');
+const escape = (string) => string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+const fs = require('fs');
+const path = require('path');
 
-Promise.resolve(fs.readdirSync(`${path.resolve(dirname)}`)).then((files) => new Promise((resolve) => {
-  const response = {};
+const parseArgSize = (arguments) => {
+    const sizes = [16, 24, 32, 64];
 
-  files.forEach((file) => {
-    const contents = fs.readFileSync(`${path.resolve(`${dirname}`)}/${file}`),
-          key = file.replace(/\.[^/.]+$/, '');
+    const candidate = arguments.map((argument, i) => {
+        if (argument === '--size') {
+            return parseInt(arguments[i + 1]);
+        }
+    }).filter(Boolean)[0];
 
-    response[key] = {
-      'data'    : base64(contents),
-      'key'     : key,
-      'pattern' : `:${escape(key)}:`
-    };
+    if (!sizes.includes(candidate)) {
+        process.stderr.write(`Undefined size argument given. Available sizes are ${sizes.join(', ')}.\n`);
+        process.exit(1);
+    }
+
+    return candidate;
+};
+
+const size = parseArgSize(process.argv);
+const dirname = `./resource/image/${size}`;
+const output = `./resource/emoji.${size}.json`;
+
+Promise
+  .resolve(fs.readdirSync(`${path.resolve(dirname)}`))
+  .then((files) => new Promise((resolve) => {
+      const response = {};
+
+      files.forEach((file) => {
+          const contents = fs.readFileSync(`${path.resolve(`${dirname}`)}/${file}`);
+          const key = file.replace(/\.[^/.]+$/, '');
+
+          response[key] = {
+              'data': contents.toString('base64'),
+              'key': key,
+              'pattern': `:${escape(key)}:`
+          };
+      });
+
+      return resolve(response);
+  }))
+  .then((response) => {
+      fs.writeFile(path.resolve(output), JSON.stringify(response), 'utf8', (err) => {
+          if (err) return console.error(err);
+      });
   });
-
-    return resolve(response);
-}))
-.then((response) => {
-  fs.writeFile(path.resolve(output), JSON.stringify(response), 'utf8', (err) => {
-    if (err) return console.error(err);
-  });
-})
