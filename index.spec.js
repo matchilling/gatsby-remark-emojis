@@ -103,6 +103,26 @@ describe(`${pkg.name}@${pkg.version}`, () => {
           );
         });
       });
+      describe('word break', () => {
+        it('does not mutate within a word if requireWhiteSpace is true', async () => {
+          options.requireWhiteSpace = true;
+          await component.mutateSource({ markdownNode }, options);
+
+          sinon.assert.calledOnce(content.replace);
+          // assert.equal(markdownNode.internal.content, content);
+        });
+
+        it('does mutate with a word break if requireWhiteSpace is true', async () => {
+          options.requireWhiteSpace = true;
+          const contentWithSpace = new String('Some content :100: !');
+          sinon.spy(contentWithSpace, 'replace');
+          markdownNode.internal.content = contentWithSpace;
+          await component.mutateSource({ markdownNode }, options);
+
+          sinon.assert.calledOnce(contentWithSpace.replace);
+          assert.include(markdownNode.internal.content, 'img');
+        });
+      });
     });
   });
 });
