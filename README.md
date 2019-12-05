@@ -22,6 +22,8 @@ plugins: [
         options: {
           // Deactivate the plugin globally (default: true)
           active : true,
+          // Require blank space on both sides of emoji (default false)
+          requireWhiteSpace: false,
           // Add a custom css class
           class  : 'emoji-icon',
           // Select the size (available size: 16, 24, 32, 64)
