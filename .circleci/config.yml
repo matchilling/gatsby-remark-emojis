@@ -1,0 +1,15 @@
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~/gatsby-remark-emojis
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - checkout
+      - run:
+          name: Run npm install
+          command: npm install
+      - run:
+          name: Run npm test
+          command: npm test
