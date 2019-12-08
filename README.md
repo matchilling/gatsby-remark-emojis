@@ -1,6 +1,6 @@
 # Gatsby Remark Emojis [![CircleCI](https://circleci.com/gh/matchilling/gatsby-remark-emojis.svg?style=svg)](https://circleci.com/gh/matchilling/gatsby-remark-emojis)
 
-Processes emoji in markdown and inlines `<img>` tags with the corresponding base64 corresponding of the image.
+:rocket: Processes emoji in markdown and inlines <img> tags with the corresponding base64 representation of the image.
 
 See all available [emoji](https://github.com/matchilling/gatsby-remark-emojis/blob/master/emoji.md)
 
